@@ -1,5 +1,7 @@
 -- ~/.config/nvim/init.lua
-require("plugins")
+vim.g.mapleader = " "
+
+require("plugin-setup")
 require("commands")
 require("keymaps")
 require("options")
