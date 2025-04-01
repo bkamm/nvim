@@ -1,38 +1,65 @@
+-- lua/plugins/lsp.lua
 return {
 	{
-		"neovim/nvim-lspconfig",
-		event = { "BufReadPre", "BufNewFile" },
+		"williamboman/mason.nvim",
+		build = ":MasonUpdate",
+		config = true
+	},
+	{
+		"williamboman/mason-lspconfig.nvim",
+		dependencies = {
+			"williamboman/mason.nvim",
+			"neovim/nvim-lspconfig",
+		},
 		config = function()
+			require("mason").setup()
+			require("mason-lspconfig").setup({
+				ensure_installed = { "lua_ls", "pyright", "clangd", "marksman" },
+				automatic_installation = false,
+			})
+
 			local lspconfig = require("lspconfig")
 			local keymaps = require("keymaps")
 
-			-- Lua (using lua-language-server)
-			lspconfig.lua_ls.setup({
-				settings = {
-					Lua = {
-						diagnostics = {
-							globals = { "vim" }, -- Remove 'undefined global vim' warning
+			require("mason-lspconfig").setup_handlers({
+				function(server_name)
+					lspconfig[server_name].setup({
+						on_attach = function(_, bufnr)
+							print("LSP server (" .. server_name .. ") attached to buffer " .. bufnr);
+							keymaps.lsp_keymaps(bufnr)
+						end,
+					})
+				end,
+
+				-- Disable "undefined global 'vim'" warning in Lua LSP
+				["lua_ls"] = function()
+					lspconfig.lua_ls.setup({
+						on_attach = function(_, bufnr)
+							print("LSP server (lua_ls) attached to buffer " .. bufnr .. " with custom config")
+							keymaps.lsp_keymaps(bufnr)
+						end,
+						settings = {
+							Lua = {
+								diagnostics = {
+									globals = { "vim" },
+								},
+							},
 						},
-					},
-				},
+					})
+				end,
+
 			})
 
-			-- Python (using pyright)
-			lspconfig.pyright.setup({})
-
-			-- C/C++ (using clangd)
-			lspconfig.clangd.setup({})
-
-			-- Markdown (using marksman)
-			lspconfig.marksman.setup({})
-
-			-- Generic LSP keybindings
-			vim.api.nvim_create_autocmd("LspAttach", {
-				callback = function(args)
-					local bufnr = args.buf
+			-- sourcekit not offered by Mason, so install manually
+			lspconfig.sourcekit.setup({
+				filetypes = { "swift" },
+				on_attach = function(_, bufnr)
+					print("LSP server (sourcekit) attached to buffer " .. bufnr)
 					keymaps.lsp_keymaps(bufnr)
 				end,
 			})
+
 		end,
 	},
 }
+
