@@ -34,9 +34,31 @@ function M.lsp_keymaps(bufnr)
   vim.keymap.set("n", "<leader>vr", vim.lsp.buf.references, opts)
   vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
   vim.keymap.set("n", "<leader>vca", vim.lsp.buf.code_action, opts)
-  vim.keymap.set("n", "<leader>f", function()
+  vim.keymap.set("n", "<leader>fo", function()
     vim.lsp.buf.format()
   end)
+end
+
+-- Keymaps for Telescope
+function M.telescope_keymaps()
+  local telescope = require("telescope.builtin")
+
+  vim.keymap.set("n", "<leader>ff", telescope.find_files)
+
+  -- Search for config files no matter what directory I'm in
+  vim.keymap.set("n", "<leader>con", function()
+    telescope.find_files({
+      cwd = vim.fn.stdpath("config"),
+    })
+  end)
+
+  -- Search for files with lazy grep
+  -- After the initial regex, you can use two spaces plus a filetype (a '*.'
+  -- will automaticall prepend the filetype) to further narrow down the search
+  vim.keymap.set("n", "<leader>fg", function()
+    require("commands.live_multigrep").live_multigrep()
+  end)
+
 end
 
 return M
