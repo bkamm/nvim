@@ -2,8 +2,6 @@
 
 vim.g.mapleader = " "
 
-vim.keymap.set("n", "<leader>ex", vim.cmd.Ex)
-
 vim.keymap.set("i", "jj", "<Esc>", { noremap = true })
 vim.keymap.set("i", "JJ", "<Esc>", { noremap = true })
 
@@ -65,7 +63,11 @@ function M.telescope_keymaps()
   vim.keymap.set("n", "<leader>fg", function()
     require("commands.live_multigrep").live_multigrep()
   end)
+end
 
+function M.oil_keymaps()
+  local oil = require("oil")
+  vim.keymap.set("n", "<leader>ex", oil.open)
 end
 
 return M
