@@ -2,7 +2,7 @@
 
 vim.g.mapleader = " "
 
-vim.keymap.set("n", "<leader>Ex", vim.cmd.Ex)
+vim.keymap.set("n", "<leader>ex", vim.cmd.Ex)
 
 vim.keymap.set("i", "jj", "<Esc>", { noremap = true })
 vim.keymap.set("i", "JJ", "<Esc>", { noremap = true })
@@ -23,6 +23,13 @@ vim.keymap.set("v", "<leader>Y", "\"+Y")
 -- delete to void register
 vim.keymap.set("n", "<leader>d", "\"_d")
 vim.keymap.set("v", "<leader>d", "\"_d")
+
+-- control windows
+vim.keymap.set("n", "<leader>wn", "<C-w>v")
+vim.keymap.set("n", "<leader>wh", "<C-w>h")
+vim.keymap.set("n", "<leader>wj", "<C-w>j")
+vim.keymap.set("n", "<leader>wk", "<C-w>k")
+vim.keymap.set("n", "<leader>wl", "<C-w>l")
 
 local M = {}
 

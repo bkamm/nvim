@@ -30,3 +30,13 @@ vim.opt.undofile = true 	-- enable persistent undo
 -- === Miscellaneous ===
 vim.opt.errorbells = false
 vim.opt.termguicolors = true
+
+vim.opt.fillchars:append {
+  vert = '█',      -- Vertical separator between windows
+  horiz = '█',     -- Horizontal separator (if any)
+  horizup = '█',
+  horizdown = '█',
+  vertleft = '█',
+  vertright = '█',
+  verthoriz = '█',
+}
