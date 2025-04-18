@@ -2,8 +2,10 @@
 
 vim.g.mapleader = " "
 
+-- return to normal mode
 vim.keymap.set("i", "jj", "<Esc>", { noremap = true })
 vim.keymap.set("i", "JJ", "<Esc>", { noremap = true })
+vim.keymap.set("v", "<leader>jj", "<Esc>", { noremap = true})
 
 -- use J and K in visual mode to move selected lines up and down
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
@@ -29,6 +31,10 @@ vim.keymap.set("n", "<leader>wj", "<C-w>j")
 vim.keymap.set("n", "<leader>wk", "<C-w>k")
 vim.keymap.set("n", "<leader>wl", "<C-w>l")
 
+-- return to start of line with 0 instead of ^
+vim.keymap.set("n", "0", "^")
+vim.keymap.set("n", "^", "0")
+
 local M = {}
 
 -- Kaymaps for LSP
@@ -38,7 +44,7 @@ function M.lsp_keymaps(bufnr)
   vim.keymap.set("n", "<leader>K", vim.lsp.buf.hover, opts)
   vim.keymap.set("n", "<leader>vr", vim.lsp.buf.references, opts)
   vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
-  vim.keymap.set("n", "<leader>vca", vim.lsp.buf.code_action, opts)
+  vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts)
   vim.keymap.set("n", "<leader>fo", function()
     vim.lsp.buf.format()
   end)
