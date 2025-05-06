@@ -9,6 +9,4 @@ vim.api.nvim_create_user_command('NC', function()
   vim.cmd('normal! ggVG<<')
 	-- turn on c++ syntax highlighting
 	vim.cmd('set filetype=cpp')
-	-- turn off Copilot
-	vim.cmd('Copilot disable')
 end, {})

@@ -33,9 +33,9 @@ vim.opt.colorcolumn = "80"    -- highlight column 80
 
 -- === Swapping/Backup/Undo ===
 vim.opt.swapfile = false                               -- disable swapfile
-vim.opt.backup = false                                 -- disable backup
+--vim.opt.backup = false                                 -- disable backup
 vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir" -- undo directory
-vim.opt.undofile = true                                -- enable persistent undo
+--vim.opt.undofile = true                                -- enable persistent undo
 
 -- === Miscellaneous ===
 vim.opt.errorbells = false

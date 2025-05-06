@@ -12,6 +12,7 @@ return {
 			"neovim/nvim-lspconfig",
 		},
 		config = function()
+      local capabilities = require('blink.cmp').get_lsp_capabilities()
 			require("mason").setup()
 			require("mason-lspconfig").setup({
 				ensure_installed = { "lua_ls", "pyright", "clangd", "marksman" },
@@ -24,6 +25,7 @@ return {
 			require("mason-lspconfig").setup_handlers({
 				function(server_name)
 					lspconfig[server_name].setup({
+            capabilities = capabilities,
 						on_attach = function(_, bufnr)
 							print("LSP server (" .. server_name .. ") attached to buffer " .. bufnr);
 							keymaps.lsp_keymaps(bufnr)
@@ -34,6 +36,7 @@ return {
 				-- Disable "undefined global 'vim'" warning in Lua LSP
 				["lua_ls"] = function()
 					lspconfig.lua_ls.setup({
+            capabilities = capabilities,
 						on_attach = function(_, bufnr)
 							print("LSP server (lua_ls) attached to buffer " .. bufnr .. " with custom config")
 							keymaps.lsp_keymaps(bufnr)
@@ -53,6 +56,7 @@ return {
 			-- sourcekit not offered by Mason, so install manually
 			lspconfig.sourcekit.setup({
 				filetypes = { "swift" },
+        capabilities = capabilities,
 				on_attach = function(_, bufnr)
 					print("LSP server (sourcekit) attached to buffer " .. bufnr)
 					keymaps.lsp_keymaps(bufnr)
