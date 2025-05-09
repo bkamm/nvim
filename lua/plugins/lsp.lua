@@ -1,21 +1,26 @@
 -- lua/plugins/lsp.lua
 return {
 	{
-		"williamboman/mason.nvim",
-		build = ":MasonUpdate",
-		config = true
+      "williamboman/mason.nvim",
+      version = "1.11.0",
+      build = ":MasonUpdate",
+      config = true
 	},
 	{
-		"williamboman/mason-lspconfig.nvim",
+    "williamboman/mason-lspconfig.nvim",
+     version = "1.32.0",
 		dependencies = {
-			"williamboman/mason.nvim",
+      {
+        "williamboman/mason.nvim",
+        version = "1.11.0",
+      },
 			"neovim/nvim-lspconfig",
 		},
 		config = function()
       local capabilities = require('blink.cmp').get_lsp_capabilities()
 			require("mason").setup()
 			require("mason-lspconfig").setup({
-				ensure_installed = { "lua_ls", "pyright", "clangd", "marksman" },
+				ensure_installed = { "lua_ls", "pyright", "clangd", "marksman", "ts_ls" },
 				automatic_installation = false,
 			})
 
@@ -66,4 +71,5 @@ return {
 		end,
 	},
 }
+
 
